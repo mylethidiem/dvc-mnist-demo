@@ -3,5 +3,11 @@
   "dataset_size": 1000,
   "dataset_version": "v2",
   "model_type": "RandomForest",
-  "model_version": "v2"
+  "model_version": "v2",
+  "parameters": {
+    "type": "RandomForest",
+    "n_estimators": 10,
+    "max_depth": 10,
+    "random_state": 42
+  }
 }

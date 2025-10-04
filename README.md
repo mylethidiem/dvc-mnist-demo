@@ -231,6 +231,19 @@ It will create a new file `dvc.lock
 - Download at [here](https://marketplace.visualstudio.com/items?itemName=Iterative.dvc)
 - My set up and testing [document](https://www.notion.so/Data-Version-Control-2810730a9673809cb7bce642f26ca5c3?v=2240730a967380d899cf000c97774734&source=copy_link#2820730a967380c4a1c7e31b124b7931)
 
+### Params
+- Add `params.yaml` with params set up
+- Train model will get and use the params in this file to test
+- Re-run `dvc repro` or `dvc exp run` again
+- `dvc params diff`
+- `dvc metrics diff`
+
+**Why we need params.yaml?**
+  - Save parameters for code (learning rate, batch_size, path, augment flag…).
+  - Connect to DVC: keys listed in dvc.yaml: stages.<name>.params will be hashed. - Change ⇒ “dirty” stage ⇒ dvc repro/dvc exp run will run again in the right - place.
+  - Compare & manage experiments: use dvc params show / dvc params diff, and dvc - exp run -S key=value to quickly try out multiple configurations.
+
+
 ## Set up version control in AWS S3 cloud storage
 - My set up document [here](https://concrete-tray-472.notion.site/Data-Version-Control-2810730a9673809cb7bce642f26ca5c3?pvs=74)
 

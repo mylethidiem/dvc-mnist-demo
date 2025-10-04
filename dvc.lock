@@ -69,13 +69,13 @@ stages:
       size: 60128
     - path: scripts/train.py
       hash: md5
-      md5: b410601af780c1122c422c876992374b
-      size: 1915
+      md5: 2d2165ad201f05483fe47004fbd38bde
+      size: 2660
     outs:
     - path: models/metrics_v1.json
       hash: md5
-      md5: 4476e103c4283308544220d0ce6e4e7a
-      size: 133
+      md5: d306ee049a0298e3341cb43286d658a4
+      size: 252
     - path: models/rf_mnist_v1.npy
       hash: md5
       md5: 954508f8938d6b85bbee99b6dee0cd3f
@@ -101,13 +101,13 @@ stages:
       size: 1128
     - path: scripts/train.py
       hash: md5
-      md5: b410601af780c1122c422c876992374b
-      size: 1915
+      md5: 2d2165ad201f05483fe47004fbd38bde
+      size: 2660
     outs:
     - path: models/metrics_v2.json
       hash: md5
-      md5: ca92a15a3f5522bec5a22b5fa3e138b2
-      size: 132
+      md5: 5d37ff4c74162ae65a50b79e98a417ee
+      size: 251
     - path: models/rf_mnist_v2.npy
       hash: md5
       md5: 9850555d8617f4af1b60cc2ef1e16f25
