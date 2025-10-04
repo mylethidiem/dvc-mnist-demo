@@ -1,0 +1,12 @@
+outs:
+- md5: 20a1bdb257a1df6b8471bc9de718236c
+  size: 14
+  hash: md5
+  path: cache_under.txt
+
+meta:
+  old-prefix: 75924
+  version: v2.0
+  date: 10/04/2025
+  author: banhmuy
+  description

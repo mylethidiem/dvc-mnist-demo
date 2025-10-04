@@ -13,3 +13,39 @@ Install requirements packages:
 pip install -r requirements.txt
 ```
 
+## Add data version 1
+### Download MNIST Dateset
+The data will saving as [standard binary file format](https://github.com/numpy/numpy/blob/067cb067cb17a20422e51da908920a4fbb3ab851/doc/neps/nep-0001-npy-format.rst). We can use other format like parquet to optimize the storage
+```bash
+python ./scripts/download_asset_v1.py
+```
+### DVC init and add data
+```bash
+dvc init
+dvc add data/raw/mnist_x_train_v1.npy
+```
+
+Add meta data in `npy.dvc` file to track the data version
+```
+meta:
+    version: v1.0
+    date: 10/04/2025
+```
+
+Add `cache_under.txt` by dvc
+```bash
+data add cache_under.txt
+```
+
+Try to change `cache_under.txt` and run `dvc status` to see the change. Run `dvc add cache_under.txt` to update the cache.
+It save another hash for this  in `cache_under.txt.dvc` file and when pushing, it will push cache version
+
+Push the last files in MNIST dataset to remote storage
+```bash
+dvc add data/raw/mnist_y_train_v1.npy
+dvc add data/raw/mnist_x_test_v1.npy
+dvc add data/raw/mnist_y_test_v1.npy
+```
+
+Git add and commit the `.dvc` files. It will push the `.npy.dvc` containing the meta data and hash of the data, ignore the `.npy` files.
+It can download the data(Cache will store in cloud) from remote storage by `dvc pull` command.
