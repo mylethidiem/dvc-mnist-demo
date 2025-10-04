@@ -75,3 +75,13 @@ Run dvc add to add the model and metrics to dvc.
 dvc add models/rf_mnist.npy
 dvc add models/metrics.json
 ```
+Create local storage contain the data cache:
+```bash
+mkdir ../dvc_storage
+
+dvc remote add -d local ../dvc_storage
+```
+Remove local stograge if already exist:
+```bash
+dvc remote remove local
+```
