@@ -56,7 +56,7 @@ There is a connection between the dvc version with git version.
 
 Add the train file to train data
 
-## Add data version 2
+## Train the model and how to pull the data storage
 Goto `data/raw`
 Symbolic link for data:
 ```bash
@@ -84,4 +84,15 @@ dvc remote add -d local ../dvc_storage
 Remove local stograge if already exist:
 ```bash
 dvc remote remove local
+```
+When you want to pull the dvc storage to your local machine, create a folder with the same level as git folder and run:
+```bash
+dvc remote add -d local ../your_dvc_storage
+dvc pull
+```
+## Add data version 2
+Create new data version 2 and add it to dvc.
+```bash
+dvc add data/raw/mnist_x_train_v2.npy
+dvc add data/raw/mnist_y_train_v2.npy
 ```
