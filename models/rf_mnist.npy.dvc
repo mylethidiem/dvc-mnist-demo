@@ -1,0 +1,5 @@
+outs:
+- md5: 951cd1598fddfc2b8b5abe60b535181e
+  size: 24115890
+  hash: md5
+  path: rf_mnist.npy

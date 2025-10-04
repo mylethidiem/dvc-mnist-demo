@@ -51,3 +51,27 @@ dvc add data/raw/mnist_y_test_v1.npy
 
 Git add and commit the `.dvc` files. It will push the `.npy.dvc` containing the meta data and hash of the data, ignore the `.npy` files.
 It can download the data(Cache will store in cloud) from remote storage by `dvc pull` command.
+
+There is a connection between the dvc version with git version.
+
+Add the train file to train data
+
+## Add data version 2
+Goto `data/raw`
+Symbolic link for data:
+```bash
+mklink x_train.npy x_train_v1.npy
+```
+For Linux/WSL:
+```bash
+ln -s mnist_x_train_v1.npy mnist_x_train.npy
+ln -s mnist_y_train_v1.npy mnist_y_train.npy
+ln -s mnist_x_test_v1.npy mnist_x_test.npy
+ln -s mnist_y_test_v1.npy mnist_y_test.npy
+```
+Run train.py to train the model and save the model and metrics.
+Run dvc add to add the model and metrics to dvc.
+```bash
+dvc add models/rf_mnist.npy
+dvc add models/metrics.json
+```
