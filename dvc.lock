@@ -1,0 +1,114 @@
+schema: '2.0'
+stages:
+  download_v1:
+    cmd: python scripts/download_asset_v1.py
+    deps:
+    - path: scripts/download_asset_v1.py
+      hash: md5
+      md5: 633063dd16b059e35d1ae7726b3e3cdb
+      size: 588
+    outs:
+    - path: data/raw/mnist_x_test_v1.npy
+      hash: md5
+      md5: 7942b66f2197f22a8ed486c6bc205255
+      size: 7840128
+    - path: data/raw/mnist_x_train_v1.npy
+      hash: md5
+      md5: 6e5236d1fa7110b7d4c75d3822137908
+      size: 47040128
+    - path: data/raw/mnist_y_test_v1.npy
+      hash: md5
+      md5: 3deb6f9de60479b947785b62051694b8
+      size: 10128
+    - path: data/raw/mnist_y_train_v1.npy
+      hash: md5
+      md5: 40b22dba779a1dffd8089edc7991f797
+      size: 60128
+  download_v2:
+    cmd: python scripts/download_asset_v2.py
+    deps:
+    - path: data/raw/mnist_x_train_v1.npy
+      hash: md5
+      md5: 6e5236d1fa7110b7d4c75d3822137908
+      size: 47040128
+    - path: data/raw/mnist_y_train_v1.npy
+      hash: md5
+      md5: 40b22dba779a1dffd8089edc7991f797
+      size: 60128
+    - path: scripts/download_asset_v2.py
+      hash: md5
+      md5: f2cbc6529dd4724a7abce2caf8fd9da4
+      size: 555
+    outs:
+    - path: data/raw/mnist_x_train_v2.npy
+      hash: md5
+      md5: b7c1f1c27bf7f49845ff383a557567f8
+      size: 784128
+    - path: data/raw/mnist_y_train_v2.npy
+      hash: md5
+      md5: b0ccab896dfde982841a478771f20009
+      size: 1128
+  train_v1:
+    cmd: python scripts/train.py --version v1
+    deps:
+    - path: data/raw/mnist_x_test_v1.npy
+      hash: md5
+      md5: 7942b66f2197f22a8ed486c6bc205255
+      size: 7840128
+    - path: data/raw/mnist_x_train_v1.npy
+      hash: md5
+      md5: 6e5236d1fa7110b7d4c75d3822137908
+      size: 47040128
+    - path: data/raw/mnist_y_test_v1.npy
+      hash: md5
+      md5: 3deb6f9de60479b947785b62051694b8
+      size: 10128
+    - path: data/raw/mnist_y_train_v1.npy
+      hash: md5
+      md5: 40b22dba779a1dffd8089edc7991f797
+      size: 60128
+    - path: scripts/train.py
+      hash: md5
+      md5: b410601af780c1122c422c876992374b
+      size: 1915
+    outs:
+    - path: models/metrics_v1.json
+      hash: md5
+      md5: 4476e103c4283308544220d0ce6e4e7a
+      size: 133
+    - path: models/rf_mnist_v1.npy
+      hash: md5
+      md5: 954508f8938d6b85bbee99b6dee0cd3f
+      size: 2406882
+  train_v2:
+    cmd: python scripts/train.py --version v2
+    deps:
+    - path: data/raw/mnist_x_test_v1.npy
+      hash: md5
+      md5: 7942b66f2197f22a8ed486c6bc205255
+      size: 7840128
+    - path: data/raw/mnist_x_train_v2.npy
+      hash: md5
+      md5: b7c1f1c27bf7f49845ff383a557567f8
+      size: 784128
+    - path: data/raw/mnist_y_test_v1.npy
+      hash: md5
+      md5: 3deb6f9de60479b947785b62051694b8
+      size: 10128
+    - path: data/raw/mnist_y_train_v2.npy
+      hash: md5
+      md5: b0ccab896dfde982841a478771f20009
+      size: 1128
+    - path: scripts/train.py
+      hash: md5
+      md5: b410601af780c1122c422c876992374b
+      size: 1915
+    outs:
+    - path: models/metrics_v2.json
+      hash: md5
+      md5: ca92a15a3f5522bec5a22b5fa3e138b2
+      size: 132
+    - path: models/rf_mnist_v2.npy
+      hash: md5
+      md5: 9850555d8617f4af1b60cc2ef1e16f25
+      size: 488388

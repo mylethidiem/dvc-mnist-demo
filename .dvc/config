@@ -1,4 +1,6 @@
 [core]
-    remote = local
+    remote = mys3
 ['remote "local"']
     url = ../../dvc_storage
+['remote "mys3"']
+    url = s3://banhmuy-aio2025/data

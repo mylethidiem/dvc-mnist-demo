@@ -21,7 +21,8 @@ dvc init
 dvc add data/raw/mnist_x_train_v1.npy
 ```
 
-Add meta data in `npy.dvc` file to track the data version
+Add meta data in `npy.dvc` file to track the data version.
+Git only save the hash of the data(metadata in .dvc file), not the data itself.
 ```
 meta:
   version: v1.0
@@ -113,9 +114,131 @@ python scripts/train.py
 dvc add models/metrics.json
 dvc add models/rf_mnist.npy
 ```
-## Set up version control in cloud
-My set up document [here](https://concrete-tray-472.notion.site/Data-Version-Control-2810730a9673809cb7bce642f26ca5c3?pvs=74)
+
+### Rollback to the Data version 1
+First git checkout to the commit that you want to rollback to, then dvc checkout the corresponding data version of that commit.
+```bash
+git checkout <commit_id>
+dvc checkout
+```
+
+### Some common DVC commands
+- `dvc list .`:the files in the current repository:
+- `dvc status`: show the status of the files in the current repository
+- `dvc pull`: pull the data from the remote storage to the local machine
+- `dvc add <file>`: add a file to the DVC repository
+- `dvc checkout`: checkout the data to the specified version
+- `dvc push`: push the data to the remote storage
+- `dvc dag`: view pipeline graph
+- `dvc repro <train_branch>`: run the correct branch
+- `dvc metrics show`: view, compare metrics
+- `dvc remote list -v`: Show current remote list
+
+### Set up DVC artifacts
+- Declare an artifacts in dvc.yaml:
+```bash
+# dvc.yaml
+stages:
+  download_v1:
+    cmd: python scripts/download_asset_v1.py
+    deps:
+      - scripts/download_asset_v1.py
+    outs:
+      - data/raw/mnist_x_train_v1.npy
+      - data/raw/mnist_y_train_v1.npy
+      - data/raw/mnist_x_test.npy
+      - data/raw/mnist_y_test.npy
+```
+Explain:
+- `deps`: logic input (file/script) for DVC to hash. Change them → “dirty” stage → rerun.
+- `outs`: DVC output tracks via cache (does not commit large data directly to Git).
+
+The derived dependency relationship (DAG)
+```r
+download_v1 ──┬─→ train_v1
+              └─→ download_v2 ─→ train_v2
+                     \
+                      (train_v2 cũng cần test v1 từ download_v1)
+
+```
+- Run dvc:
+Before run should run `dvc remove` with any of the above targets to stop tracking the overlapping output.
+```bash
+dvc remove data/raw/mnist_x_train_v2.npy.dvc
+dvc remove data/raw/mnist_y_train_v2.npy.dvc
+dvc remove data/raw/mnist_x_train_v1.npy.dvc
+dvc remove data/raw/mnist_y_train_v1.npy.dvc
+dvc remove data/raw/mnist_x_test_v1.npy.dvc
+dvc remove data/raw/mnist_y_test_v1.npy.dvc
+# other files if need
+
+dvc repro
+```
+Run `dvc dag`
+```
+ +-------------+
+                         | download_v1 |
+                      ***+-------------+****
+                 *****          *           ****
+             ****               *               ****
+          ***                   *                   ****
++----------+            +-------------+                 ***
+| train_v1 |            | download_v2 |                **
++----------+            +-------------+              **
+                                      **           **
+                                        **       **
+                                          **   **
+                                       +----------+
+                                       | train_v2 |
+                                       +----------+
++---------------------+
+| cache_under.txt.dvc |
++---------------------+
++-------------------------+
+| models/metrics.json.dvc |
++-------------------------+
++-------------------------+
+| models/rf_mnist.npy.dvc |
++-------------------------+
+~
+~
+```
+Or `dvc dag --mermaid > dag.mmd`(Mermaid file)
+```mermaid
+flowchart TD
+	node1["download_v1"]
+	node2["download_v2"]
+	node3["train_v1"]
+	node4["train_v2"]
+	node1-->node2
+	node1-->node3
+	node1-->node4
+	node2-->node4
+	node5["cache_under.txt.dvc"]
+	node6["models/metrics.json.dvc"]
+	node7["models/rf_mnist.npy.dvc"]
+```
+Run `dvc metrics show` to show metric results:
+```
+Path                    accuracy    dataset_size    dataset_version    model_type    model_version
+models/metrics_v1.json  0.9319      60000           v1                 RandomForest  v1
+models/metrics_v2.json  0.8047      1000            v2                 RandomForest  v2
+```
+
+It will create a new file `dvc.lock
+
+### Using DVC VS Code Extension
+- Download at [here](https://marketplace.visualstudio.com/items?itemName=Iterative.dvc)
+- My set up and testing [document](https://www.notion.so/Data-Version-Control-2810730a9673809cb7bce642f26ca5c3?v=2240730a967380d899cf000c97774734&source=copy_link#2820730a967380c4a1c7e31b124b7931)
+
+## Set up version control in AWS S3 cloud storage
+- My set up document [here](https://concrete-tray-472.notion.site/Data-Version-Control-2810730a9673809cb7bce642f26ca5c3?pvs=74)
+
+## Set up version control in Google Cloud Storage or Any Storages
+TBU
+
+----
 
 Note:
-- This project is from my learning in AIO2025 class - AI VIET NAM \
+- This project is from my learning in AIO2025 class - AI VIET NAM
 - Reference source: https://github.com/dangnha/dvc-mnist-demo
