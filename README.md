@@ -1,7 +1,3 @@
-Note:
-- This project is from my learning in AIO2025 class - AI VIET NAM \
-- Reference source: https://github.com/dangnha/dvc-mnist-demo
-
 # MNIST Practice with DVC(Data Version Control)
 
 
@@ -117,4 +113,9 @@ python scripts/train.py
 dvc add models/metrics.json
 dvc add models/rf_mnist.npy
 ```
+## Set up version control in cloud
+My set up document [here](https://concrete-tray-472.notion.site/Data-Version-Control-2810730a9673809cb7bce642f26ca5c3?pvs=74)
 
+Note:
+- This project is from my learning in AIO2025 class - AI VIET NAM \
+- Reference source: https://github.com/dangnha/dvc-mnist-demo
