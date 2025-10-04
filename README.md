@@ -2,9 +2,9 @@
 
 
 ## Install DVC
-Follow this doc: https://dvc.org/doc/start
-Recommend using Python version 3.10-3.11
-Install requirements packages:
+- Follow this doc: https://dvc.org/doc/start
+- Recommend using Python version 3.10-3.11
+- Install requirements packages:
 ```bash
 pip install -r requirements.txt
 ```
@@ -161,7 +161,7 @@ download_v1 ──┬─→ train_v1
                       (train_v2 cũng cần test v1 từ download_v1)
 
 ```
-- Run dvc:
+- Run dvc: \
 Before run should run `dvc remove` with any of the above targets to stop tracking the overlapping output.
 ```bash
 dvc remove data/raw/mnist_x_train_v2.npy.dvc
