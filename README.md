@@ -28,8 +28,10 @@ dvc add data/raw/mnist_x_train_v1.npy
 Add meta data in `npy.dvc` file to track the data version
 ```
 meta:
-    version: v1.0
-    date: 10/04/2025
+  version: v1.0
+  date: 10/04/2025
+  author: banhmuy
+  description: MNIST dataset version 1
 ```
 
 Add `cache_under.txt` by dvc
