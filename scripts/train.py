@@ -5,10 +5,10 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-# Load MNIST dataset VERSION 1
-print("Loading MNIST dataset VERSION 1...")
-x_train = np.load('data/raw/mnist_x_train_v1.npy')
-y_train = np.load('data/raw/mnist_y_train_v1.npy')
+# Load MNIST dataset
+print("Loading MNIST dataset...")
+x_train = np.load('data/raw/mnist_x_train.npy')
+y_train = np.load('data/raw/mnist_y_train.npy')
 x_test = np.load('data/raw/mnist_x_test_v1.npy')
 y_test = np.load('data/raw/mnist_y_test_v1.npy')
 

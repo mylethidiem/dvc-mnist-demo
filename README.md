@@ -96,3 +96,25 @@ Create new data version 2 and add it to dvc.
 dvc add data/raw/mnist_x_train_v2.npy
 dvc add data/raw/mnist_y_train_v2.npy
 ```
+
+DVC have no version, it bases on git to track the version of the data. DVC itself does not reinvent the version control system. Instead, it is designed to extend Git to handle large files, data, and models.
+
+Create new symbol link to the new data version 2 and retrain the model.
+```bash
+cd data/raw
+rm mnist_x_train.npy mnist_y_train.npy
+
+# Create new
+ln -s mnist_x_train_v2.npy mnist_x_train.npy
+ln -s mnist_y_train_v2.npy mnist_y_train.npy
+
+cd ../..
+
+# Retrain model
+python scripts/train.py
+
+# dvc v2
+dvc add models/metrics.json
+dvc add models/rf_mnist.npy
+```
+
